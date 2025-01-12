@@ -1,3 +1,115 @@
-
-
-<h1>Hello, Lovely Bharat</h1>   
+<div class="container">
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h6 class="text-white">Employee List</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-striped" >
+              <thead>
+                <tr >
+                  <th scope="col">S.NO.</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Contact</th>
+                  <th scope="col">Email</th>
+                  <th class="text-center" scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of employeeList; track $index) {
+                <tr>
+                  <td>{{$index+1}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.contactNo}}</td>
+                  <td>{{item.emailId}}</td>
+                  <td class="text-center">
+                    <button class="btn btn-primary" (click)="onEdit(item,$index)">
+                      Edit
+                    </button>  
+                    <button class="btn btn-danger mx-2" (click)="onDelete($index,item.name)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <form [formGroup]="employeeForm" (ngSubmit)="submitEmployeeForm()">
+      <div class="card-header bg-primary">
+        <h6 class="text-white">New Employee</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+ 
+          <div class="col-12">
+            <label for="">Name</label>
+            <input type="text" formControlName="name" class="form-control">
+           <div *ngIf="hasError('name','required')">
+            Name is required
+           </div>
+          </div>
+          <div class="col-6">
+            <label for="">City</label>
+            <input type="text" formControlName="city" class="form-control">
+          </div>
+          <div class="col-6">
+            <label for="">State</label>
+            <input type="text" formControlName="state" class="form-control">
+          </div>
+          <div class="col-6">
+            <label for="">Email Id</label>
+            <input type="text" formControlName="emailId" class="form-control">
+            <div *ngIf="hasError('emailId','required')">
+              Email is required
+             </div>
+          </div>
+          <div class="col-6">
+            <label for="">contact Number</label>
+            <input type="text" formControlName="contactNo" class="form-control">
+            <div *ngIf="hasError('contactNo','pattern')">
+              Contact number is incorrect
+             </div>
+          </div>
+          <div class="col-12">
+            <label for="">Pin Code</label>
+            <input type="text" formControlName="pinCode" class="form-control">
+          </div>
+          <div class="col-12">
+            <label for="">Address</label>
+            <textarea type="text" formControlName="address" class="form-control"></textarea>
+          </div>
+         
+          <div class="pt-4 text-center ">
+            <button type="button" class="col-5  btn btn-secondary" (click)="onReset()">
+              Reset
+            </button>  
+            <button
+            type="button"
+            [disabled]="!employeeForm.valid"
+            (click)="submitEmployeeForm()"
+            [ngClass]="{
+              'btn-primary': !isEditing,
+              'btn-success': isEditing
+            }"
+            class="btn mx-2"
+          >
+            {{ isEditing ? 'Update Employee' : 'Save Employee' }}
+          </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+</div> 
