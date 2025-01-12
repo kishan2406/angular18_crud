@@ -54,18 +54,6 @@ export class AppComponent implements OnInit {
     this.isEditing = true; // Activate edit mode
     this.editIndex = index; // Save the index of the item being edited
     this.employeeForm.setValue({ ...item }); // Populate the form with employee data
-
-    // this.employeeForm.setValue({
-    //   empId: item.empId,
-    //   name: item.name,
-    //   city: item.city,
-    //   state: item.state,
-    //   emailId: item.emailId,
-    //   contactNo: item.contactNo,
-    //   address: item.address,
-    //   pinCode: item.pinCode,
-
-    // })
   }
   // for error popup
   hasError = (controlName: string, errorName: string) => {
@@ -92,7 +80,7 @@ export class AppComponent implements OnInit {
 
   submitEmployeeForm() {
     if (!this.employeeForm.valid) {
-      alert('Please fill out the form correctly');
+      this.showToast('Please fill out the form correctly', 'danger');
     }
 
     const employeeData: EmployeeModel = {
@@ -105,10 +93,10 @@ export class AppComponent implements OnInit {
 
     if (this.isEditing && this.editIndex !== null) {
       this.employeeList[this.editIndex] = employeeData; // Update the employee
-      alert('Employee updated successfully!');
+      this.showToast('Employee updated successfully!', 'danger');
     } else {
       this.employeeList.push(employeeData); // Add new employee
-      alert('Employee added successfully!');
+      this.showToast('Employee added successfully!', 'danger');
     }
 
     // Save to localStorage
@@ -120,43 +108,4 @@ export class AppComponent implements OnInit {
     // Reset the form and state
     this.onReset();
   }
-  // submitEmployeeForm(){
-  // if(this.employeeForm.valid){
-
-  //   const newEmployee: EmployeeModel = {
-  //     empId: this.employeeList.length + 1, // Increment ID based on the current list length
-  //     name: this.employeeForm.value.name,
-  //     city: this.employeeForm.value.city,
-  //     state: this.employeeForm.value.state,
-  //     emailId: this.employeeForm.value.emailId,
-  //     contactNo: this.employeeForm.value.contactNo,
-  //     address: this.employeeForm.value.address,
-  //     pinCode: this.employeeForm.value.pinCode,
-  //   };
-
-  //   this.employeeList.push(newEmployee);
-  //   localStorage.setItem(this.localStorageKey,JSON.stringify(this.employeeList));
-  //   this.employeeForm.reset();
-
-  // }else{
-  //   alert("Please Fill The Form")
-  // }
-  // }
-
-  // submitEmployeeForm(){
-  // if(this.employeeForm.valid){
-  // const oldData = localStorage.getItem(this.localStorageKey);
-  // if(oldData != null){
-  //   const parseData = JSON.parse(oldData);
-  //   this.employeeForm.controls["empId"].setValue(parseData.length + 1);
-  //   this.employeeList.unshift(this.employeeForm.value);
-  // }else{
-  //   this.employeeList.unshift(this.employeeForm.value);
-  //   localStorage.setItem(this.localStorageKey,JSON.stringify(this.employeeList));
-  // }
-
-  // }else{
-  //   alert("Please Fill The Form")
-  // }
-  // }
 }
