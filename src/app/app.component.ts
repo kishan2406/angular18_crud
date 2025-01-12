@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     this.initaliseFormData();
+    
     const oldData = localStorage.getItem(this.localStorageKey);
     if (oldData != null) {
       const parseData = JSON.parse(oldData);
@@ -57,7 +58,6 @@ export class AppComponent implements OnInit {
   }
   // for error popup
   hasError = (controlName: string, errorName: string) => {
-    // return this.employeeForm.controls[controlName].getError(errorName);
     const control = this.employeeForm.get(controlName);
     return control?.hasError(errorName) && (control.touched || control.dirty);
   };
